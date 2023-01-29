@@ -11,14 +11,14 @@ ALACRITTY_RC=~/.config/alacritty/alacritty.yml
 MD=10.5
 LG=16
 
-function IsCurrentFontSizeLg() {
+IsCurrentFontSizeLg() {
   grep "size: $LG" $ALACRITTY_RC > /dev/null 2>&1
   return $? # Exit status of grep
 }
 
-function ChangeFontSize() {
+ChangeFontSize() {
   sed -E -i "s/size: (.*)/size: $1/g" $ALACRITTY_RC
 }
 
 IsCurrentFontSizeLg && tgt=$MD || tgt=$LG
-ChangeFontSize $tgt
+ChangeFontSize "$tgt"
