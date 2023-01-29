@@ -5,19 +5,20 @@
 #                  Toggle between medium and large font sizes                  #
 #******************************************************************************#
 
-# Path to alacritty configuration file
-alacritty_rc=~/.config/alacritty/alacritty.yml
+ALACRITTY_RC=~/.config/alacritty/alacritty.yml
 
-# Definition of medium and large font sizes
-md=10.5
-lg=16
+# Font sizes
+MD=10.5
+LG=16
 
-# Check if the current font size is large
-lg_count=$(grep -c "size: $lg" $alacritty_rc)
+function IsCurrentFontSizeLg() {
+  grep "size: $LG" $ALACRITTY_RC > /dev/null 2>&1
+  return $? # Exit status of grep
+}
 
-# Font size is lg if the count is greater than 0
-# If the current font size is lg, the target size is md. Otherwise, it's lg
-[ $lg_count -gt 0 ] && tgt=$md || tgt=$lg
+function ChangeFontSize() {
+  sed -E -i "s/size: (.*)/size: $1/g" $ALACRITTY_RC
+}
 
-# Replace current font size with target size in alacritty's configuration file
-sed -E -i "s/size: (.*)/size: $tgt/g" $alacritty_rc
+IsCurrentFontSizeLg && tgt=$MD || tgt=$LG
+ChangeFontSize $tgt
