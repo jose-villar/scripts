@@ -1,2 +1,3 @@
-# scripts
-Collection of useful scripts
+# Scripts
+
+Collection of utility scripts for GNU/Linux
